@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card center">
+  <h2>¡Bienvenido {{ user.nombre }}!</h2>
+  <p>¿Qué deseas hacer hoy?</p>
+  <div class="row">
+    <a class="btn" href="#">➕ Ingresar electrodomésticos</a>
+    <a class="btn" href="#">📊 Calcular consumos y costos</a>
+    <a class="btn" href="#">⚖️ Comparar electrodomésticos</a>
+    <a class="btn ghost" href="{% url 'logout' %}">Cerrar sesión</a>
+  </div>
+</section>
+{% endblock %}

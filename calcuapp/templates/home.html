@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card center">
+  <h2>Bienvenido a Calcuambiente</h2>
+  <p>Energía clara, decisiones inteligentes</p>
+  <div class="row">
+    <a class="btn" href="{% url 'login' %}">Ingresar</a>
+    <a class="btn ghost" href="{% url 'register' %}">Crear cuenta</a>
+  </div>
+</section>
+{% endblock %}
