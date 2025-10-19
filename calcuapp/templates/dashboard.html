@@ -4,9 +4,10 @@
   <h2>¡Bienvenido {{ user.nombre }}!</h2>
   <p>¿Qué deseas hacer hoy?</p>
   <div class="row">
-    <a class="btn" href="#">➕ Ingresar electrodomésticos</a>
-    <a class="btn" href="#">📊 Calcular consumos y costos</a>
-    <a class="btn" href="#">⚖️ Comparar electrodomésticos</a>
+    <a class="btn" href="{% url 'ingresar_electrodomestico' %}">➕ Ingresar electrodomésticos</a>
+    <a class="btn" href="{% url 'listar_electrodomesticos' %}">Ver Electrodomésticos</a>
+    <a class="btn" href="{% url 'calcular_consumos' %}">📊 Calcular consumos y costos</a>
+    <a class="btn" href="{% url 'comparar_electrodomesticos' %}">⚖️ Comparar electrodomésticos</a>
     <a class="btn ghost" href="{% url 'logout' %}">Cerrar sesión</a>
   </div>
 </section>

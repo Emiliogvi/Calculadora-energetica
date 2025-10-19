@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="card" style="max-width: 1200px; margin: 2rem auto; background-color: #141414; padding: 2.5rem; border-radius: 16px; box-shadow: 0 0 18px rgba(0,0,0,0.6);">
+  
+  <!-- Botón de volver -->
+  <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+    <a href="{% url 'dashboard' %}" 
+       style="background-color: #3498db; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1rem; transition: 0.3s;">
+       ⬅️ Volver al Inicio
+    </a>
+  </div>
+
+  <h2 style="color: #fff; margin-bottom: 1.5rem; font-size: 1.5rem; display: flex; align-items: center; gap: 8px;">
+    ⚡ Electrodomésticos registrados
+  </h2>
+
+  {% if electrodomesticos %}
+  <div style="overflow-x: auto; border-radius: 10px;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 1rem; background-color: #1e1e1e; color: #fff;">
+      <thead>
+        <tr style="background-color: #2a2a2a; text-align: left;">
+          <th style="padding: 16px; width: 22%;">Nombre</th>
+          <th style="padding: 16px; width: 22%;">Categoría</th>
+          <th style="padding: 16px; width: 16%;">Tipo</th>
+          <th style="padding: 16px; width: 16%; text-align: right;">Potencia (W)</th>
+          <th style="padding: 16px; width: 16%; text-align: right;">Horas de uso diario</th>
+          <th style="padding: 16px; width: 18%; text-align: center;">Operaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in electrodomesticos %}
+        <tr style="border-bottom: 1px solid #333; transition: background 0.2s;">
+          <td style="padding: 14px;">{{ e.nombre }}</td>
+          <td style="padding: 14px;">{{ e.categoria }}</td>
+          <td style="padding: 14px;">{{ e.tipo }}</td>
+          <td style="padding: 14px; text-align: right;">{{ e.potencia_w }}</td>
+          <td style="padding: 14px; text-align: right;">{{ e.horas_uso_diario }}</td>
+          <td style="padding: 14px; text-align: center;">
+            <div style="display: flex; justify-content: center; gap: 8px;">
+              <a href="{% url 'editar_electrodomestico' e.id %}" 
+                 style="background-color: #2ecc71; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; transition: 0.3s;">
+                 ✏️ Editar
+              </a>
+              <a href="{% url 'eliminar_electrodomestico' e.id %}" 
+                 style="background-color: #e74c3c; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 4px; transition: 0.3s;"
+                 onclick="return confirm('¿Seguro que deseas eliminar este electrodoméstico?');">
+                 🗑️ Eliminar
+              </a>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p style="color: #bbb;">No hay electrodomésticos registrados aún.</p>
+  {% endif %}
+</section>
+{% endblock %}

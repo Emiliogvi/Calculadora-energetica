@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Comparar Electrodomésticos</h2>
+    <form method="POST" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Selecciona un electrodoméstico convencional:</label>
+            <select name="convencional" class="form-select" required>
+                <option value="">-- Selecciona --</option>
+                {% for e in electrodomesticos %}
+                    {% if e.tipo == "convencional" %}
+                        <option value="{{ e.id }}">{{ e.nombre }} ({{ e.categoria }})</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Selecciona un electrodoméstico eficiente:</label>
+            <select name="eficiente" class="form-select" required>
+                <option value="">-- Selecciona --</option>
+                {% for e in electrodomesticos %}
+                    {% if e.tipo == "eficiente" %}
+                        <option value="{{ e.id }}">{{ e.nombre }} ({{ e.categoria }})</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label>Tarifa de energía ($/kWh):</label>
+            <input type="number" name="tarifa" class="form-control" step="0.01" required>
+        </div>
+
+        <button type="submit" class="btn btn-success">Comparar</button>
+    </form>
+
+    {% if mensaje %}
+        <div class="alert alert-danger">{{ mensaje }}</div>
+    {% endif %}
+
+    {% if resultado %}
+    <h4>Resultados de la Comparación</h4>
+    <table class="table table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>Aspecto</th>
+                <th>Convencional</th>
+                <th>Eficiente</th>
+                <th>Ahorro</th>
+            </tr>
+        </thead>
+        <tbody>
+    <tr>
+        <td>Consumo mensual (kWh)</td>
+        <td>{{ resultado.conv.consumo_mensual|floatformat:2 }}</td>
+        <td>{{ resultado.efic.consumo_mensual|floatformat:2 }}</td>
+        <td>{{ resultado.ahorro_kwh_mensual|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td>Costo mensual ($)</td>
+        <td>{{ resultado.conv.costo_mensual|floatformat:2 }}</td>
+        <td>{{ resultado.efic.costo_mensual|floatformat:2 }}</td>
+        <td>{{ resultado.ahorro_costo_mensual|floatformat:2 }}</td>
+    </tr>
+    <tr>
+        <td>Huella de carbono (kg CO₂/mes)</td>
+        <td>{{ resultado.conv.consumo_mensual|floatformat:2|add:""|floatformat:2 }} × 0.43</td>
+        <td>{{ resultado.efic.consumo_mensual|floatformat:2|add:""|floatformat:2 }} × 0.43</td>
+        <td>{{ resultado.ahorro_co2_mensual|floatformat:2 }}</td>
+    </tr>
+</tbody>
+
+    </table>
+    {% endif %}
+</div>
+{% endblock %}
